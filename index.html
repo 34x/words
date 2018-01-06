@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="words.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <title></title>
 </head>
 <body>
-<div id="app">
-    <input type="text" v-model="pattern" /> <span v-if="isSearching">Searching</span>
-    <div>
-        <ol>
-            <li v-for="word in matches">{{ word }}</li>
-        </ol>
-        <span v-if="0 == matches.length">No matches</span>
+<div id="app" class="container-fluid">
+    <div class="row">
+        <input type="text" v-model="pattern" class="col-sm-12" placeholder="input search"/>
+        <span v-if="isSearching">Searching</span>
+        <div class="col-sm-12">
+            <ol>
+                <template v-for="word in matches">
+                <li>{{ word }}</li>
+                </template>
+            </ol>
+            <span v-if="0 == matches.length">No matches</span>
+        </div>
     </div>
 </div>
 </body>
@@ -37,7 +46,7 @@ new Vue({
             for (var idx = 0; idx < this.pattern.length; idx++) {
                 searchPattern.push(this.pattern[idx]);
             }
-            var regexp = new RegExp('.*' + searchPattern.join('.*') + '.*');
+            var regexp = new RegExp('.*' + searchPattern.join('.*') + '.*', 'i');
             for (var wordIDX in words) {
                 var word = words[wordIDX];
                 if (regexp.test(word)) {
