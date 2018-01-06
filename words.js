@@ -1,4 +1,6 @@
-var words = ["абажур",
+// initial words source http://blog.harrix.org/article/3334
+var words = [
+  "абажур",
 "абаз",
 "абазин",
 "абазинка",
