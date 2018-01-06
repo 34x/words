@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="words.js"></script>
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="pattern" /> <span v-if="isSearching">Searching</span>
+    <div>
+        <ol>
+            <li v-for="word in matches">{{ word }}</li>
+        </ol>
+        <span v-if="0 == matches.length">No matches</span>
+    </div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+new Vue({
+    'el': '#app',
+    data: {
+        pattern: '',
+        isSearching: false
+    },
+    computed: {
+        matches: function() {
+            if (0 === this.pattern.length) {
+                return [];
+            }
+            this.isSearching = true;
+            var result = [];
+
+            var searchPattern = [];
+            for (var idx = 0; idx < this.pattern.length; idx++) {
+                searchPattern.push(this.pattern[idx]);
+            }
+            var regexp = new RegExp('.*' + searchPattern.join('.*') + '.*');
+            for (var wordIDX in words) {
+                var word = words[wordIDX];
+                if (regexp.test(word)) {
+                    result.push(word);
+                }
+
+                // if (result.length > 500) {
+                //     // break;
+                // }
+            }
+            this.isSearching = false;
+            return result;
+        }
+    }
+
+});
+</script>
